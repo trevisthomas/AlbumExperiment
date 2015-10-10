@@ -13,7 +13,8 @@ class SongTableViewController: UITableViewController {
     var artistTitle : String = ""
     var albumIndex : Int = 0
     private let tableCellIdentifier = "SongCell"
-    var musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    //var musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    var musicPlayer = MPMusicPlayerController.systemMusicPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
