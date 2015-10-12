@@ -15,6 +15,13 @@ class SongTableViewController: UITableViewController {
     private let tableCellIdentifier = "SongCell"
     //var musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
     var musicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    
+    var itemCollection : MPMediaItemCollection? {
+        didSet{
+            self.title = itemCollection!.representativeItem!.valueForProperty(MPMediaItemPropertyPodcastTitle) as? String
+        }
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +45,20 @@ class SongTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
-        return albumCollection.count
+        if(itemCollection != nil){
+            return itemCollection!.count
+        } else {
+            let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
+            return albumCollection.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
-        let item = albumCollection.items[indexPath.row]
+        
+//        let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
+//        let item = albumCollection.items[indexPath.row]
+        let item = getItem(atIndex: indexPath.row)
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(tableCellIdentifier)!
         let title = item.valueForProperty(MPMediaItemPropertyTitle) as! String
 //        let trackNumber = item.valueForProperty(MPMediaItemPropertyAlbumTrackNumber) as? String
@@ -55,19 +69,37 @@ class SongTableViewController: UITableViewController {
         return cell
     }
     
+    private func getItem(atIndex index : Int) -> MPMediaItem{
+        if(itemCollection != nil){
+            return itemCollection!.items[index]
+        } else {
+            let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
+            let item = albumCollection.items[index]
+            return item
+        }
+    }
+    
+    
     private func formatDuration(duration : Float) ->String{
         let minutes = Int(floor(duration / 60));
-        let seconds = duration - Float(minutes * 60)
-        return "\(minutes):\(Int(round(seconds)))"
+        let secondsFloat = duration - Float(minutes * 60)
+        let seconds = String(format: "%02d", Int(round(secondsFloat)))
+            
+        return "\(minutes):\(seconds)"
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let albumCollection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
+        var collection : MPMediaItemCollection
+        if(itemCollection != nil){
+            collection = itemCollection!
+        } else {
+            collection = MusicLibrary.instance.getAlbum(forArtist: artistTitle, atAlbumIndex: albumIndex)
+        }
         
         musicPlayer.stop()
-        musicPlayer.setQueueWithItemCollection(albumCollection);
+        musicPlayer.setQueueWithItemCollection(collection);
         musicPlayer.stop()
-        musicPlayer.nowPlayingItem = albumCollection.items[indexPath.row]
+        musicPlayer.nowPlayingItem = collection.items[indexPath.row]
         musicPlayer.play();
 
     }

@@ -12,6 +12,9 @@ import MediaPlayer
 class GenreTableViewController: UITableViewController {
     
     private let cellIdentifier = "GenreCell"
+    private let cellPodcastIdentifier = "GenrePodcastCell"
+    private var genres : [DataBundle]?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,7 @@ class GenreTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        genres = MusicLibrary.instance.getGenreBundle()
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,39 +41,49 @@ class GenreTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        let query = MPMediaQuery.genresQuery()
-        return (query.collections?.count)! //Maybe you should check and show a meaningfull error.
+//        let query = MPMediaQuery.genresQuery()
+//        return (query.collections?.count)! //Maybe you should check and show a meaningfull error.
+        return genres!.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)!
         
-        let query = MPMediaQuery.genresQuery()
-        let mediaItemCollection = query.collections?[indexPath.row];
+        let bundle = genres![indexPath.row]
+        var identifier : String
+        if(bundle.isPodcast) {
+            identifier = self.cellPodcastIdentifier
+        } else {
+            identifier = self.cellIdentifier
+        }
         
-        let mediaItem = mediaItemCollection?.representativeItem
-        let genre = mediaItem?.valueForProperty(MPMediaItemPropertyGenre) as? String
-        let songCount = mediaItemCollection!.count
+        let cell = tableView.dequeueReusableCellWithIdentifier(identifier)!
+//        let query = MPMediaQuery.genresQuery()
+//        let mediaItemCollection = query.collections?[indexPath.row];
+//        
+//        let mediaItem = mediaItemCollection?.representativeItem
+//        let genre = mediaItem?.valueForProperty(MPMediaItemPropertyGenre) as? String
+//        let songCount = mediaItemCollection!.count
+//        
+//        
+//        
+//        //Determine artist count
+//        let predicateByArtist = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
+//        query.filterPredicates = Set(arrayLiteral: predicateByArtist)
+//        query.groupingType = .AlbumArtist
+//        let artistCount = query.collections!.count
+//        //
+//        
+//        //Determine album count
+//        let predicateByAlbum = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
+//        query.filterPredicates = Set(arrayLiteral: predicateByAlbum)
+//        query.groupingType = .Album
+//        let albumCount = query.collections!.count
+//        
+//        let subtitle = "\(artistCount) artists, \(albumCount) albums, \(songCount) songs."
         
+        cell.textLabel?.text = genres?[indexPath.row].title
+        cell.detailTextLabel?.text = genres?[indexPath.row].detail
         
-        
-        //Determine artist count
-        let predicateByArtist = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
-        query.filterPredicates = Set(arrayLiteral: predicateByArtist)
-        query.groupingType = .AlbumArtist
-        let artistCount = query.collections!.count
-        //
-        
-        //Determine album count
-        let predicateByAlbum = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
-        query.filterPredicates = Set(arrayLiteral: predicateByAlbum)
-        query.groupingType = .Album
-        let albumCount = query.collections!.count
-        
-        let subtitle = "\(artistCount) artists, \(albumCount) albums, \(songCount) songs."
-        
-        cell.textLabel?.text = genre
-        cell.detailTextLabel?.text = subtitle
 
         return cell
     }
@@ -123,10 +137,17 @@ class GenreTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
-        let albumViewController = segue.destinationViewController as! AlbumTableViewController
-        let genre = MusicLibrary.instance.getGenre(atGenreIndex: indexPath.row)
-        albumViewController.genreTitle = genre
-        albumViewController.title = genre
+        let bundle = genres![indexPath.row]
+        
+        if bundle.isPodcast{
+            let viewController = segue.destinationViewController as! PodcastListViewController
+            //Acually, there's nothing to set.
+            viewController.title = bundle.title
+        } else {
+            let albumViewController = segue.destinationViewController as! AlbumTableViewController
+            albumViewController.genreTitle = bundle.title
+            albumViewController.title = bundle.title
+        }
     }
 
     /*

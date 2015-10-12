@@ -106,4 +106,64 @@ class MusicLibrary {
         return albumCollection
     }
     
+    func getGenreBundle() ->[DataBundle]{
+        let query = MPMediaQuery.genresQuery()
+        var result = [DataBundle]()
+        for mediaItemCollection in query.collections!{
+            let bundle = DataBundle()
+            let mediaItem = mediaItemCollection.representativeItem
+            let genre = mediaItem?.valueForProperty(MPMediaItemPropertyGenre) as? String
+            let songCount = mediaItemCollection.count
+            
+            //Determine artist count
+            let predicateByArtist = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
+            query.filterPredicates = Set(arrayLiteral: predicateByArtist)
+            query.groupingType = .AlbumArtist
+            let artistCount = query.collections!.count
+            //
+            
+            //Determine album count
+            let predicateByAlbum = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
+            query.filterPredicates = Set(arrayLiteral: predicateByAlbum)
+            query.groupingType = .Album
+            let albumCount = query.collections!.count
+            
+            bundle.detail = "\(artistCount) artists, \(albumCount) albums, \(songCount) songs."
+            bundle.title = genre!
+            bundle.artwork = mediaItemCollection.representativeItem?.valueForProperty(MPMediaItemPropertyArtwork) as? String
+            bundle.isPodcast = false;
+            result.append(bundle)
+        }
+        
+        let bundle = DataBundle();
+        bundle.title = "Podcast"
+        bundle.detail = "\(getPodcasts().count) programs."
+        bundle.isPodcast = true
+        result.append(bundle)
+        
+        return result;
+    }
+    
+    func getPodcasts() ->[MPMediaItemCollection]{
+        let query = MPMediaQuery.podcastsQuery()
+        return query.collections!
+    }
+    
+    func getPodcastEpisodes(index : Int) ->MPMediaItemCollection{
+        
+//        let query = MPMediaQuery.podcastsQuery()
+//        let predicate = MPMediaPropertyPredicate(value: query, forProperty: MPMediaItemPropertyPodcastTitle)
+//        query.filterPredicates = Set(arrayLiteral: predicate)
+//        query.groupingType = .Album
+        
+        let query = MPMediaQuery.podcastsQuery()
+        return (query.collections?[index])!
+        
+//        return query.collections!
+//        let podcastCollection = artistCollection[index] //A collection of all songs by the artist i think
+//        let mediaItem = artistItemsCollection.representativeItem! //An item to represent the artist
+//        let artistTitle = mediaItem.valueForProperty(MPMediaItemPropertyAlbumArtist) as! String
+//        return artistTitle
+    }
+    
 }

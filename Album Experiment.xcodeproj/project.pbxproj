@@ -15,6 +15,8 @@
 		0F46A2851BC9494B00165794 /* AlbumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46A2841BC9494B00165794 /* AlbumTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0F46A2871BC94B3B00165794 /* MusicLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46A2861BC94B3B00165794 /* MusicLibrary.swift */; settings = {ASSET_TAGS = (); }; };
 		0F46A28B1BC9A51200165794 /* SongTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46A28A1BC9A51200165794 /* SongTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0FA5B4C11BCB726700AE8D5D /* DataBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5B4C01BCB726700AE8D5D /* DataBundle.swift */; settings = {ASSET_TAGS = (); }; };
+		0FA5B4C51BCB7AA500AE8D5D /* PodcastListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5B4C41BCB7AA500AE8D5D /* PodcastListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		0F46A2841BC9494B00165794 /* AlbumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewController.swift; sourceTree = "<group>"; };
 		0F46A2861BC94B3B00165794 /* MusicLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicLibrary.swift; sourceTree = "<group>"; };
 		0F46A28A1BC9A51200165794 /* SongTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewController.swift; sourceTree = "<group>"; };
+		0FA5B4C01BCB726700AE8D5D /* DataBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBundle.swift; sourceTree = "<group>"; };
+		0FA5B4C41BCB7AA500AE8D5D /* PodcastListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				0F46A2771BC87A6900165794 /* LaunchScreen.storyboard */,
 				0F46A27A1BC87A6900165794 /* Info.plist */,
 				0F46A2861BC94B3B00165794 /* MusicLibrary.swift */,
+				0FA5B4C01BCB726700AE8D5D /* DataBundle.swift */,
+				0FA5B4C41BCB7AA500AE8D5D /* PodcastListViewController.swift */,
 			);
 			path = "Album Experiment";
 			sourceTree = "<group>";
@@ -145,6 +151,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F46A28B1BC9A51200165794 /* SongTableViewController.swift in Sources */,
+				0FA5B4C11BCB726700AE8D5D /* DataBundle.swift in Sources */,
+				0FA5B4C51BCB7AA500AE8D5D /* PodcastListViewController.swift in Sources */,
 				0F46A2811BC87D1700165794 /* GenreTableViewController.swift in Sources */,
 				0F46A2851BC9494B00165794 /* AlbumTableViewController.swift in Sources */,
 				0F46A26F1BC87A6900165794 /* AppDelegate.swift in Sources */,
@@ -298,6 +306,7 @@
 				0F46A27F1BC87A6900165794 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

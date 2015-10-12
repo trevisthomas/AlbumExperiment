@@ -13,6 +13,7 @@ class AlbumTableViewController: UITableViewController {
     
     private let cellIdentifier = "AlbumCell"
     var genreTitle : String = ""
+//    var bundle : DataBundle = DataBundle()
     
     /* Trevis, the section headers are stick to the top when you set "Plain" in the attributes
     inspector. "Grouped" causes them to live like regular table cells
