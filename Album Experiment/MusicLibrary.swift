@@ -166,4 +166,102 @@ class MusicLibrary {
 //        return artistTitle
     }
     
+    /*
+    This implementation is intended to back the CollectionView based Album page.  The goal is to create a dictionary keyed by 
+    the first letter of the artists name.  The value is an array containing a sorted list of AlbumData. Some of the album data objects are artist name only, the others represent an album. This was built to feed the ContainerView that i intend to use to present these.
+    */
+    func getArtistBundle(genre : String) ->[String : [AlbumData]]{
+        let query = MPMediaQuery.genresQuery()
+        let predicate = MPMediaPropertyPredicate(value: genre, forProperty: MPMediaItemPropertyGenre)
+        query.filterPredicates = Set(arrayLiteral: predicate)
+        query.groupingType = .Album
+        let albumCollections = query.collections!
+        
+        var albumArray : [AlbumData] = [AlbumData] () // = [AlbumData?](count: albumCollections.count, repeatedValue: nil)
+        for album in albumCollections {
+            let albumItem = album.representativeItem!
+            albumArray.append(loadAlbumData(fromAlbumItem: albumItem))
+        }
+        let sortedAlbumArray = albumArray.sort(){$0.artist < $1.artist}
+        
+        var indexedBundle = [String : [AlbumData]]()
+        var previousArtist : String = ""
+        for album in sortedAlbumArray{
+            //Get his container
+            let firstLetter : String = album.sortableArtist[0]
+            
+            if indexedBundle[firstLetter] == nil{
+                indexedBundle[firstLetter] = [AlbumData]()
+            }
+            
+            //Handle title change
+            if previousArtist != album.sortableArtist{
+                previousArtist = album.sortableArtist
+                indexedBundle[firstLetter]?.append(AlbumData(title: album.artist))
+            }
+            
+            //Add him
+            indexedBundle[firstLetter]?.append(album)
+        }
+  
+        //Debug: Dump
+        let keys = indexedBundle.keys.sort()
+        for key in keys {
+            let value = indexedBundle[key]!
+            print(value)
+        }
+        return indexedBundle
+
+    }
+    
+    private func loadAlbumData(fromAlbumItem item : MPMediaItem) -> AlbumData{
+        let db = AlbumData()
+        let props : Set<String> = [MPMediaItemPropertyAlbumTitle ,MPMediaItemPropertyPodcastTitle, MPMediaItemPropertyAlbumTrackCount, MPMediaItemPropertyAlbumArtist, MPMediaItemPropertyArtwork, MPMediaItemPropertyReleaseDate]
+        
+        item.enumerateValuesForProperties(props) {
+            (str : String, obj : AnyObject, bool : UnsafeMutablePointer<ObjCBool>) in
+            switch str{
+            case MPMediaItemPropertyAlbumArtist:
+                // After hours of fighting the below if block is the first thing that i have found that can handle when the AnyObject is wrapped arround 0x0.  Everything else blew up.  The answer wasn't directly to my question but i did figure it out from this post http://nshipster.com/swift-literal-convertible/
+                if(obj as? NSObject == .None){
+                    print ("Album Artist: AnyObject was 0x0" )
+                    db.artist = "<None>"
+                }
+                else if let _ = obj as? String{
+//                    print ("Album Artist: \(obj)" )
+                    db.artist = obj as! String
+                } else {
+                    print ("Album Artist: not null and not a string." )
+                }
+                
+            case /*MPMediaItemPropertyPodcastTitle,*/ MPMediaItemPropertyAlbumTitle:
+                db.title = obj as! String
+            case MPMediaItemPropertyAlbumTrackCount:
+                db.trackCount = obj as! Int
+            case MPMediaItemPropertyArtwork:
+                db.art = obj as! MPMediaItemArtwork
+            case MPMediaItemPropertyReleaseDate:
+                db.releaseDate = obj as! NSDate
+            default:
+                break
+                
+            }
+        }
+        return db
+        
+    }
+    
+    //Cool debug method for printing out the timing of a method. Found on stack over flow, modified to wrap method with return value
+    static func printTimeElapsedWhenRunningCode(title:String, operation:()->(AnyObject))->AnyObject {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        let retval = operation()
+        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+        //if timeElapsed > 0.00 {
+        let time = NSString(format: "%.4f", timeElapsed)
+        print("Time elapsed for \(title): \(time) s")
+        //}
+        return retval
+    }
+
+    
 }

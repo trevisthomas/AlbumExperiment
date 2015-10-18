@@ -144,9 +144,11 @@ class GenreTableViewController: UITableViewController {
             //Acually, there's nothing to set.
             viewController.title = bundle.title
         } else {
-            let albumViewController = segue.destinationViewController as! AlbumTableViewController
+//            let albumViewController = segue.destinationViewController as! AlbumTableViewController
+//            albumViewController.genreTitle = bundle.title
+//            albumViewController.title = bundle.title
+            let albumViewController = segue.destinationViewController as! AlbumViewController
             albumViewController.genreTitle = bundle.title
-            albumViewController.title = bundle.title
         }
     }
 

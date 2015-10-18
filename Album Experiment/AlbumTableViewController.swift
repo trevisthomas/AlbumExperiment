@@ -28,6 +28,9 @@ class AlbumTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        MusicLibrary.printTimeElapsedWhenRunningCode("loading artist bundle"){
+            MusicLibrary.instance.getArtistBundle(self.genreTitle)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,8 +97,8 @@ class AlbumTableViewController: UITableViewController {
         let retval = operation()
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         //if timeElapsed > 0.00 {
-            let time = NSString(format: "%.4f", timeElapsed)
-            print("Time elapsed for \(title): \(time) s")
+//            let time = NSString(format: "%.4f", timeElapsed)
+//            print("Time elapsed for \(title): \(time) s")
         //}
         return retval
     }

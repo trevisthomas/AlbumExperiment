@@ -9,6 +9,12 @@
 import Foundation
 
 class DataBundle {
+    
+    enum DataType{
+        case ALBUM
+        case ARTIST
+        //TODO add genre podcast
+    }
     var title : String = ""
     var detail : String = ""
     var artwork : String? 
