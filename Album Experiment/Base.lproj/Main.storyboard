@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XV9-GS-2Ky">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -149,7 +150,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.16991154100529104" green="0.16991154100529104" blue="0.16991154100529104" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="MnZ-v7-Ly3" customClass="UICollectionViewLeftAlignedLayout">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="50" height="50"/>
@@ -165,10 +166,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ArtistLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ppb-zK-3VQ">
-                                            <rect key="frame" x="8" y="14" width="584" height="21"/>
+                                            <rect key="frame" x="8" y="11" width="584" height="28"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="24"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -193,26 +194,54 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="AlbumCell" id="K3U-8s-j4K" customClass="AlbumCell" customModule="Album_Experiment" customModuleProvider="target">
-                                <rect key="frame" x="234" y="164" width="133" height="110"/>
+                                <rect key="frame" x="220" y="164" width="160" height="192"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="133" height="110"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="192"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Album Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjs-fp-oVb">
-                                            <rect key="frame" x="0.0" y="0.0" width="87" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="161" translatesAutoresizingMaskIntoConstraints="NO" id="mjs-fp-oVb">
+                                            <rect key="frame" x="8" y="156" width="144" height="11"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="9"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="161" translatesAutoresizingMaskIntoConstraints="NO" id="7si-1I-EJD">
+                                            <rect key="frame" x="8" y="171" width="144" height="10"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="8"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iMr-48-W9z">
+                                            <rect key="frame" x="8" y="8" width="144" height="144"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="iMr-48-W9z" secondAttribute="height" multiplier="1:1" id="tqj-TH-eoe"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <animations/>
-                                <size key="customSize" width="133" height="110"/>
+                                <color key="backgroundColor" red="0.092551256613756627" green="0.092551256613756627" blue="0.092551256613756627" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="7si-1I-EJD" secondAttribute="trailing" id="7dV-ul-o7Q"/>
+                                    <constraint firstItem="7si-1I-EJD" firstAttribute="leading" secondItem="K3U-8s-j4K" secondAttribute="leadingMargin" id="C0z-Ep-pvf"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="iMr-48-W9z" secondAttribute="trailing" id="Exc-1E-mBv"/>
+                                    <constraint firstItem="mjs-fp-oVb" firstAttribute="top" secondItem="iMr-48-W9z" secondAttribute="bottom" constant="4" id="FvH-Dw-v0Y"/>
+                                    <constraint firstItem="mjs-fp-oVb" firstAttribute="leading" secondItem="K3U-8s-j4K" secondAttribute="leadingMargin" id="LeI-BN-et7"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="mjs-fp-oVb" secondAttribute="trailing" id="iOF-Yq-rzE"/>
+                                    <constraint firstItem="7si-1I-EJD" firstAttribute="top" secondItem="mjs-fp-oVb" secondAttribute="bottom" constant="4" id="kH4-4A-d3a"/>
+                                    <constraint firstItem="iMr-48-W9z" firstAttribute="leading" secondItem="K3U-8s-j4K" secondAttribute="leadingMargin" id="rUA-wF-3yV"/>
+                                    <constraint firstAttribute="topMargin" secondItem="iMr-48-W9z" secondAttribute="top" id="tvv-83-bgB"/>
+                                </constraints>
+                                <size key="customSize" width="160" height="192"/>
                                 <connections>
+                                    <outlet property="albumArtImageView" destination="iMr-48-W9z" id="RgN-Mc-JfX"/>
+                                    <outlet property="albumDetails" destination="7si-1I-EJD" id="qhc-3Q-Tn2"/>
                                     <outlet property="albumTitleLabel" destination="mjs-fp-oVb" id="l1x-5V-AHX"/>
                                 </connections>
                             </collectionViewCell>
@@ -222,16 +251,16 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SectionLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUp-rQ-Nn5">
-                                    <rect key="frame" x="8" y="14" width="100" height="21"/>
+                                    <rect key="frame" x="203" y="3" width="195" height="43"/>
                                     <animations/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="36"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </label>
                             </subviews>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="leadingMargin" secondItem="aUp-rQ-Nn5" secondAttribute="leading" id="AQt-TT-cfc"/>
+                                <constraint firstItem="aUp-rQ-Nn5" firstAttribute="centerX" secondItem="0py-Wf-HH7" secondAttribute="centerX" id="44g-1g-pze"/>
                                 <constraint firstItem="aUp-rQ-Nn5" firstAttribute="centerY" secondItem="0py-Wf-HH7" secondAttribute="centerY" id="gpT-4R-m2T"/>
                             </constraints>
                             <connections>

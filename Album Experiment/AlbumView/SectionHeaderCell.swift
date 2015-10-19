@@ -12,6 +12,7 @@ class SectionHeaderCell: UICollectionViewCell {
     @IBOutlet weak var headerLabel: UILabel!
     var title : String!{
         didSet{
+//            headerLabel.text = title.uppercaseString
             headerLabel.text = title
         }
     }

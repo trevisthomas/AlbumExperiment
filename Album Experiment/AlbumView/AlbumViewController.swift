@@ -10,7 +10,8 @@ import UIKit
 
 class AlbumViewController: UICollectionViewController, UICollectionViewDelegateLeftAlignedLayout {
 
-    let cellInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+//    let cellInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    let contentInsets = UIEdgeInsets(top: 0.0, left: 10, bottom: 0.0, right: 10)
     var albumCellWidth : CGFloat!
     var albumCellHeight : CGFloat!
     var artistCellWidth : CGFloat!
@@ -23,13 +24,14 @@ class AlbumViewController: UICollectionViewController, UICollectionViewDelegateL
         }
     }
     
-    
     var indexedArtistData : [String : [AlbumData]]! {
         didSet{
             sections = indexedArtistData.keys.sort()
         }
     }
     var sections : [String]!
+    
+    var indexView : BDKCollectionIndexView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,17 @@ class AlbumViewController: UICollectionViewController, UICollectionViewDelegateL
 //        albumCellWidth = (calculateShortSide() - cellInsets.left - cellInsets.right) / 2.0
 //        albumCellHeight = albumCellWidth //Same for now.  May make non square for titles
         
+//        let contentInset = collectionView!.contentInset
+//        collectionView?.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 50, right: contentInset.right)
+        
+        collectionView?.contentInset = contentInsets
+
         adjustCellDimensions(toOrientation: UIApplication.sharedApplication().statusBarOrientation)
+        
+        //https://gist.github.com/kreeger/4756030
+        buildIndexView()
+        indexView.indexTitles = sections
+        view.addSubview(indexView) //This wasnt in the demo
         
     }
     
@@ -96,10 +108,10 @@ class AlbumViewController: UICollectionViewController, UICollectionViewDelegateL
             itemsPerRow = 2.0
         }
         
-        albumCellWidth = (referenceWidth - cellInsets.left - cellInsets.right) / itemsPerRow
-        albumCellHeight = albumCellWidth //Same for now.  May make non square for titles
+        albumCellWidth = (referenceWidth - contentInsets.left - contentInsets.right - 4.0) / itemsPerRow
+        albumCellHeight = albumCellWidth +  (0.2 * albumCellWidth) //Same for now.  May make non square for titles
         
-        artistCellWidth = referenceWidth - cellInsets.left - cellInsets.right
+        artistCellWidth = referenceWidth - contentInsets.left - contentInsets.right
         collectionView?.collectionViewLayout.invalidateLayout()
     }
 
@@ -170,17 +182,58 @@ class AlbumViewController: UICollectionViewController, UICollectionViewDelegateL
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         
-        return cellInsets
+//        return cellInsets
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0.0
+        return 4.0 //Between
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 10.0
+        return 4.0 //Under
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 100, height: 100) //An attempt to space the section header's out. Seems to work.
+    }
+    
+    
+    //MARK: Index View
+    /**
+    
+    Trevis! Basically these two methods get it done for adding the index to your collection view.  Notice how
+    indexViewValueChanged is just passed in as a string when the Objective C class is expecting a selector
+    */
+    func buildIndexView() -> BDKCollectionIndexView{
+        if(indexView != nil){
+            return indexView
+        }
+        let indexWidth : CGFloat = 20;
+        let frame : CGRect = CGRectMake(CGRectGetWidth(self.collectionView!.frame) - indexWidth,
+            CGRectGetMinY(self.collectionView!.frame) + 100,
+            indexWidth,
+            CGRectGetHeight(self.collectionView!.frame) - 200);  //Insetting the top and bottom of the index.  Dont forgget.  Looks horible in landscape.
+        
+        indexView = BDKCollectionIndexView(frame: frame, indexTitles: [String]())
+        indexView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleLeftMargin]
+        indexView.addTarget(self, action: "indexViewValueChanged:", forControlEvents: .ValueChanged)
+        return indexView
+    }
+    
+    func indexViewValueChanged(view : BDKCollectionIndexView){
+        let path = NSIndexPath(forItem: 0, inSection: Int(view.currentIndex))
+        collectionView?.scrollToItemAtIndexPath(path, atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        
+        // I bump the y-offset up by 45 points here to account for aligning the top of
+        // the section header view with the top of the collectionView frame. It's
+        // hardcoded, but you get the idea.
+        collectionView!.contentOffset = CGPointMake(self.collectionView!.contentOffset.x,
+            self.collectionView!.contentOffset.y - 65);// Weird magic number stuff
+    }
+    
 
+    
     // MARK: UICollectionViewDelegate
 
     /*

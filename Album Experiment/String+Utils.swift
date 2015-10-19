@@ -30,10 +30,10 @@ extension String {
         for article in String.articlesArray {
             let range = str.rangeOfString(article)
             if(range != nil && (range?.startIndex == str.startIndex)){
-                return self.substringFromIndex((range?.endIndex)!)
+                return str.substringFromIndex((range?.endIndex)!)
                 
             }
         }
-        return self
+        return str
     }
 }

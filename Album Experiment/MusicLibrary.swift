@@ -179,8 +179,8 @@ class MusicLibrary {
         
         var albumArray : [AlbumData] = [AlbumData] () // = [AlbumData?](count: albumCollections.count, repeatedValue: nil)
         for album in albumCollections {
-            let albumItem = album.representativeItem!
-            albumArray.append(loadAlbumData(fromAlbumItem: albumItem))
+            
+            albumArray.append(loadAlbumData(fromAlbum: album))
         }
         let sortedAlbumArray = albumArray.sort(){$0.artist < $1.artist}
         
@@ -214,10 +214,12 @@ class MusicLibrary {
 
     }
     
-    private func loadAlbumData(fromAlbumItem item : MPMediaItem) -> AlbumData{
+    private func loadAlbumData(fromAlbum album : MPMediaItemCollection) -> AlbumData{
         let db = AlbumData()
-        let props : Set<String> = [MPMediaItemPropertyAlbumTitle ,MPMediaItemPropertyPodcastTitle, MPMediaItemPropertyAlbumTrackCount, MPMediaItemPropertyAlbumArtist, MPMediaItemPropertyArtwork, MPMediaItemPropertyReleaseDate]
+        let props : Set<String> = [MPMediaItemPropertyAlbumTitle ,MPMediaItemPropertyPodcastTitle, MPMediaItemPropertyAlbumArtist, MPMediaItemPropertyArtwork, MPMediaItemPropertyReleaseDate]
         
+        let item = album.representativeItem!
+        db.trackCount = album.count
         item.enumerateValuesForProperties(props) {
             (str : String, obj : AnyObject, bool : UnsafeMutablePointer<ObjCBool>) in
             switch str{
@@ -225,7 +227,7 @@ class MusicLibrary {
                 // After hours of fighting the below if block is the first thing that i have found that can handle when the AnyObject is wrapped arround 0x0.  Everything else blew up.  The answer wasn't directly to my question but i did figure it out from this post http://nshipster.com/swift-literal-convertible/
                 if(obj as? NSObject == .None){
                     print ("Album Artist: AnyObject was 0x0" )
-                    db.artist = "<None>"
+                    db.artist = "Untitled"
                 }
                 else if let _ = obj as? String{
 //                    print ("Album Artist: \(obj)" )
@@ -236,8 +238,8 @@ class MusicLibrary {
                 
             case /*MPMediaItemPropertyPodcastTitle,*/ MPMediaItemPropertyAlbumTitle:
                 db.title = obj as! String
-            case MPMediaItemPropertyAlbumTrackCount:
-                db.trackCount = obj as! Int
+//            case MPMediaItemPropertyAlbumTrackCount:
+//                db.trackCount = obj as! Int
             case MPMediaItemPropertyArtwork:
                 db.art = obj as! MPMediaItemArtwork
             case MPMediaItemPropertyReleaseDate:

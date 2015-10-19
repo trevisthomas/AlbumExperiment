@@ -22,6 +22,7 @@
 		0F60021B1BD2E0A10037C580 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60021A1BD2E0A10037C580 /* AlbumCell.swift */; settings = {ASSET_TAGS = (); }; };
 		0F60021D1BD2E1EE0037C580 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60021C1BD2E1EE0037C580 /* AlbumViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0F6002231BD41E620037C580 /* UICollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6002221BD41E620037C580 /* UICollectionViewLeftAlignedLayout.m */; settings = {ASSET_TAGS = (); }; };
+		0F6002271BD4B0540037C580 /* BDKCollectionIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6002261BD4B0540037C580 /* BDKCollectionIndexView.m */; settings = {ASSET_TAGS = (); }; };
 		0FA5B4C11BCB726700AE8D5D /* DataBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5B4C01BCB726700AE8D5D /* DataBundle.swift */; settings = {ASSET_TAGS = (); }; };
 		0FA5B4C51BCB7AA500AE8D5D /* PodcastListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5B4C41BCB7AA500AE8D5D /* PodcastListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -46,6 +47,8 @@
 		0F6002201BD41E610037C580 /* Album Experiment-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Album Experiment-Bridging-Header.h"; sourceTree = "<group>"; };
 		0F6002211BD41E620037C580 /* UICollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICollectionViewLeftAlignedLayout.h; path = ThirdParty/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
 		0F6002221BD41E620037C580 /* UICollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICollectionViewLeftAlignedLayout.m; path = ThirdParty/UICollectionViewLeftAlignedLayout/UICollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
+		0F6002251BD4B0540037C580 /* BDKCollectionIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDKCollectionIndexView.h; path = ThirdParty/BDKCollectionViewIndex/BDKCollectionIndexView.h; sourceTree = "<group>"; };
+		0F6002261BD4B0540037C580 /* BDKCollectionIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDKCollectionIndexView.m; path = ThirdParty/BDKCollectionViewIndex/BDKCollectionIndexView.m; sourceTree = "<group>"; };
 		0FA5B4C01BCB726700AE8D5D /* DataBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataBundle.swift; sourceTree = "<group>"; };
 		0FA5B4C41BCB7AA500AE8D5D /* PodcastListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +117,8 @@
 		0F6002241BD41E6D0037C580 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				0F6002251BD4B0540037C580 /* BDKCollectionIndexView.h */,
+				0F6002261BD4B0540037C580 /* BDKCollectionIndexView.m */,
 				0F6002211BD41E620037C580 /* UICollectionViewLeftAlignedLayout.h */,
 				0F6002221BD41E620037C580 /* UICollectionViewLeftAlignedLayout.m */,
 			);
@@ -196,6 +201,7 @@
 				0FA5B4C11BCB726700AE8D5D /* DataBundle.swift in Sources */,
 				0F60021D1BD2E1EE0037C580 /* AlbumViewController.swift in Sources */,
 				0FA5B4C51BCB7AA500AE8D5D /* PodcastListViewController.swift in Sources */,
+				0F6002271BD4B0540037C580 /* BDKCollectionIndexView.m in Sources */,
 				0F46A2811BC87D1700165794 /* GenreTableViewController.swift in Sources */,
 				0F46A2851BC9494B00165794 /* AlbumTableViewController.swift in Sources */,
 				0F10F9AF1BD29A340097580E /* String+Utils.swift in Sources */,
